@@ -36,9 +36,9 @@ function App() {
 
   return (
     <div>
-      <Header title="Listagem de repositórios"/>
+      <Header title="lista de repositórios"/>
       <ul data-testid="repository-list">
-  {repositories.map(repo=><li key={repo.id}>{repo.title} - 
+  {repositories.length > 0 && repositories.map(repo=><li key={repo.id}>{repo.title} - 
     <button onClick={() => handleRemoveRepository(`${repo.id}`)} key={repo.id}>
         Remover 
     </button><input type="hidden" value={repo.id}/>
