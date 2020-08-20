@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from "react";
-import Header from './components/Header';
 import "./styles.css";
 import api from "./services/api";
 
@@ -36,9 +35,8 @@ function App() {
 
   return (
     <div>
-      <Header title="lista de repositórios"/>
       <ul data-testid="repository-list">
-  {repositories.length > 0 && repositories.map(repo=><li key={repo.id}>{repo.title} - 
+  {repositories.length > 0 && repositories.map(repo=><li key={repo.id}>{repo.title} 
     <button onClick={() => handleRemoveRepository(`${repo.id}`)} key={repo.id}>
         Remover 
     </button><input type="hidden" value={repo.id}/>
