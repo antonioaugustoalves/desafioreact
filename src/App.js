@@ -20,10 +20,18 @@ function App() {
       techs: ["REACT", "REACT-NATIVE", "MYSQL"]
 
     });
+
+    const repo = response.data;
+    setRepositories([...repositories, repo]);
   }
 
+  
   async function handleRemoveRepository(id) {
-    // TODO
+    const response = await api.delete(`repositories/${id}`);
+    const repo = response.data;
+    const indexRepo = repositories.findIndex(repo=> repo.id === id);
+    repositories.splice(indexRepo, 1);
+    setRepositories([...repositories]);
   }
 
   return (
@@ -31,15 +39,12 @@ function App() {
       <Header title="Listagem de repositórios"/>
       <ul data-testid="repository-list">
   {repositories.map(repo=><li key={repo.id}>{repo.title} - 
-    <button onClick={() => handleRemoveRepository(`${repo.id}`)}>
-        Remover
-    </button>
+    <button onClick={() => handleRemoveRepository(`${repo.id}`)} key={repo.id}>
+        Remover 
+    </button><input type="hidden" value={repo.id}/>
   </li>)}
         
-
-          
-        
-      </ul>
+  </ul>
 
       <button onClick={handleAddRepository}>Adicionar</button>
     </div>
