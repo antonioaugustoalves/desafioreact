@@ -1,10 +1,25 @@
-import React from "react";
-
+import React, {useState, useEffect} from "react";
+import Header from './components/Header';
 import "./styles.css";
+import api from "./services/api";
 
 function App() {
+  const [repositories, setRepositories] = useState([]);
+
+  //list all repositories
+  useEffect(()=>{
+    api.get('repositories').then(response=>{
+      setRepositories(response.data);
+    })
+  }, []);
+
   async function handleAddRepository() {
-    // TODO
+    const response = await api.post('repositories', {
+      title:`Projeto de sistem ${Date.now()}`,
+      url:`https://github.com/Rocketseat/repository${Date.now()}`,
+      techs: ["REACT", "REACT-NATIVE", "MYSQL"]
+
+    });
   }
 
   async function handleRemoveRepository(id) {
@@ -13,14 +28,17 @@ function App() {
 
   return (
     <div>
+      <Header title="Listagem de repositórios"/>
       <ul data-testid="repository-list">
-        <li>
-          Repositório 1
+  {repositories.map(repo=><li key={repo.id}>{repo.title} - 
+    <button onClick={() => handleRemoveRepository(`${repo.id}`)}>
+        Remover
+    </button>
+  </li>)}
+        
 
-          <button onClick={() => handleRemoveRepository(1)}>
-            Remover
-          </button>
-        </li>
+          
+        
       </ul>
 
       <button onClick={handleAddRepository}>Adicionar</button>
